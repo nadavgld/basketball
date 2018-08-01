@@ -8,6 +8,8 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
     const port = 3333;
 
     scope.scores;
+    scope.newPlayer = {};
+
     scope.showNewGame = false;
     scope.NewGameButtonText = "Add Game";
 
@@ -27,12 +29,12 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
     }
 
     scope.fetchPlayers = function () {
-        return new Promise((resolve, reject) => {
+        // return new Promise((resolve, reject) => {
             $http.get(hostPortJoin(host, port) + "/players").then((response) => {
                 scope.players = response.data;
-                resolve();
+                // resolve();
             })
-        })
+        // })
     }
 
     scope.tableClass = function (index) {
@@ -53,26 +55,46 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
     scope.toggleNewGame = function () {
         if (!scope.showNewGame) {
             scope.showNewGame = true;
-            scope.NewGameButtonText = "Add Game";
+            scope.NewGameButtonText = "Hide Add Game";
 
             scope.newPlayers = [];
-            scope.tmpPlayers = scope.players;
+            scope.tmpPlayers = JSON.parse(JSON.stringify(scope.players));
 
             console.log(scope.newPlayers);
             console.log(scope.tmpPlayers);
         } else {
             scope.showNewGame = false;
-            scope.NewGameButtonText = "Hide Add Game";
+            scope.NewGameButtonText = "Add Game";
         }
     }
 
-    scope.choosePlayer = function (a) {
-        scope.tmpPlayers.splice(scope.tmpPlayers.indexOf(a),1);
-        scope.newPlayers.push(a);
+    scope.ltr = function (item) {
+        scope.tmpPlayers.splice(scope.tmpPlayers.indexOf(item), 1);
+        scope.newPlayers.push(item)
+    }
 
-        console.log(scope.newPlayers);
-        console.log(scope.tmpPlayers);
+    scope.rtl = function (item) {
+        scope.newPlayers.splice(scope.newPlayers.indexOf(item), 1);
+        scope.tmpPlayers.push(item)
+    }
 
+    scope.addNewPlayer = function () {
+        if(scope.newPlayer.name.length == 0)
+            return;
+
+        if (scope.tmpPlayers.indexOf(scope.newPlayer.name) == -1 && scope.newPlayers.indexOf(scope.newPlayer.name) == -1) {
+            scope.newPlayers.push(scope.newPlayer.name)
+            scope.newPlayer.name = ''
+        } else {
+            scope.newPlayer.name = ''
+        }
+    }
+
+    scope.sendScore = function () {
+        if (scope.newPlayers.length < 2) {
+            alert("Game must contain atleast 2 players")
+            return;
+        }
     }
 }])
 

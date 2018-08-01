@@ -6,10 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Baketball Tournament</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src='https://code.jquery.com/jquery.min.js'></script>
-    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' rel='stylesheet' type='text/css' />
-    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
 </head>
 
@@ -51,7 +57,7 @@
             <button class="btn btn-success" ng-click="toggleNewGame()">{{NewGameButtonText}}</button>
 
             <div ng-if="showNewGame">
-                <div class="col-md-12 ml-30 mt-20">
+                <!-- <div class="col-md-12 ml-30 mt-20">
                     <div class="col-md-5">
                         <div class="show-header">
                             Pick Players:
@@ -68,6 +74,37 @@
                     </div>
                     <div class="col-md-12 mt-50">
                         <button class="btn btn-info">Submit</button>
+                    </div>
+                </div> -->
+
+                <div class="col-md-12 mt-3 d-flex text-center">
+                    <div class="col-md-6 border-right">
+                        <div class="show-header">All Players</div>
+                        <div class="grid-table">
+                            <div class="grid-item" ng-repeat="l in tmpPlayers | orderBy:''" ng-click="ltr(l)">
+                                {{l}}
+                            </div>
+                        </div>
+                        <div class="text-left">
+                            <input type="text" class="input-player" ng-model="newPlayer.name" class="mt-2 p-1" name="newPlayer" placeholder="Add New Player"
+                                ng-keypress="($event.which === 13)?addNewPlayer():0" />
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 border-left">
+                        <div class="show-header">Current Game</div>
+                        <div class="grid-table">
+                            <div class="grid-item" ng-repeat="r in newPlayers" ng-click="rtl(r)" ng-class="tableClass($index)">
+                                {{r}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mt-5 mb-5 text-center d-flex">
+                    <div class="col-md-4">
+                        <button class="btn btn-info w-100" ng-click="sendScore()"> Send new score </button>
                     </div>
                 </div>
             </div>

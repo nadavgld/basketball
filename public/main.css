@@ -62,9 +62,37 @@ table > tbody > tr:hover{
     background-color: #bedadf;    
 }
 
-
 .show-header{
     font-size: 16px;
-    border-bottom: 1px solid;
+    border-bottom: 1px solid #dee2e6;
+    text-align: left;
     margin-bottom: 10px;
 }
+
+.grid-table{
+    display: grid;
+    grid-template-columns: repeat(3, 150px);
+    grid-gap: 5px;
+  }
+  
+  .grid-item{
+    background: #555;
+    padding: 10px;
+    color: white;
+  }
+  
+  .grid-item:hover{
+    background: #f0f0f0;
+    color: #555;
+    cursor: pointer;
+  }
+
+  .input-player{
+    height: 40px;
+    border: 1px solid #adadad;
+    padding: 5px;
+    padding-bottom: 8px;
+    width: 150px;
+    margin-top: 10px;
+    padding-left: 9px;
+  }
