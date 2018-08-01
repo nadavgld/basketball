@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html ng-app="basket-app">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Baketball Tournament</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src='https://code.jquery.com/jquery.min.js'></script>
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' rel='stylesheet' type='text/css' />
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+</head>
+
+<body ng-controller="mainController" ng-init="init()">
+
+    <div class="container">
+        <h1>SIEMENS - Students Basketball Tournament</h1>
+
+        <table class="table mt-50">
+            <thead>
+                <tr>
+                    <th>
+                        <span class="glyphicon glyphicon-user"></span> Player
+                    </th>
+                    <th>
+                        <span class="glyphicon glyphicon-signal"></span> Score
+                    </th>
+                    <th>
+                        <span class="glyphicon glyphicon-send"></span> Games
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="player in scores | orderBy: '-score'" ng-class="tableClass($index)">
+                    <td>
+                        {{player.name}}
+                    </td>
+                    <td>
+                        {{player.score}}
+                    </td>
+                    <td>
+                        {{player.games}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="mt-50">
+            <button class="btn btn-success" ng-click="toggleNewGame()">{{NewGameButtonText}}</button>
+
+            <div ng-if="showNewGame">
+                <div class="col-md-12 ml-30 mt-20">
+                    <div class="col-md-5">
+                        <div class="show-header">
+                            Pick Players:
+                        </div>
+                        <select class="form-control size-50" name="pSelect" ng-model="chosenPlayer" ng-change="choosePlayer(chosenPlayer)">
+                            <option value="" disabled></option>
+                            <option ng-repeat="APlayer in tmpPlayers" value="{{APlayer}}">{{APlayer}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="show-header">
+                            Current Game:
+                        </div>
+                    </div>
+                    <div class="col-md-12 mt-50">
+                        <button class="btn btn-info">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

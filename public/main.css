@@ -1,0 +1,70 @@
+:root {
+    --bg-gold-hover: #e7d56b;
+    --bg-gold: #eaca15;
+    --txt-gold: #000000;
+    --bg-silver-hover: #b8b8b8;
+    --bg-silver: #999999;
+    --txt-silver: #000000;
+    --bg-bronze-hover: #c7aa8c;
+    --bg-bronze: #c99b6d;
+    --txt-bronze: #000000;
+}
+
+.gold{
+    background-color: var(--bg-gold) !important;
+    color: var(--txt-gold) !important;
+    font-weight: 700;
+}
+
+.gold:hover{
+    background-color: var(--bg-gold-hover) !important;
+}
+
+.silver{
+    background-color: var(--bg-silver) !important;
+    color: var(--txt-silver) !important;
+    font-weight: 600;
+}
+
+.silver:hover{
+    background-color: var(--bg-silver-hover) !important;
+}
+
+
+.bronze{
+    background-color: var(--bg-bronze) !important;
+    color: var(--txt-bronze) !important;
+    font-weight: 500;
+}
+
+.bronze:hover{
+    background-color: var(--bg-bronze-hover) !important;
+}
+
+
+.mt-50{
+    margin-top: 50px;
+}
+
+.mt-20{
+    margin-top: 20px;
+}
+
+.ml-30{
+    margin-left: 30px;
+}
+
+.size-50{
+    width: 250px;
+}
+
+table > tbody > tr:hover{
+    background-color: #bedadf;    
+}
+
+
+.show-header{
+    font-size: 16px;
+    border-bottom: 1px solid;
+    margin-bottom: 10px;
+}

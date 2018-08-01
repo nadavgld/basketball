@@ -1,0 +1,29 @@
+{
+    "players":[
+        {
+            "name": "Nadav Grinberg",
+            "score": 1,
+            "games": 1
+        },
+        {
+            "name": "Assaf Nahum",
+            "score": 3,
+            "games": 2
+        },
+        {
+            "name": "Sahar Ben Shushan",
+            "score": 4,
+            "games": 2
+        },
+        {
+            "name": "Ofir Lapid",
+            "score": 2,
+            "games": 2
+        },
+        {
+            "name": "Nir Movshovich",
+            "score": 1,
+            "games": 3
+        }
+    ]
+}
