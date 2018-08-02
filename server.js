@@ -9,7 +9,7 @@ var app = express()
 app.use(cors())
 var scoresFetchInterval;
 
-const port = 3333
+const port = process.env.PORT || 8080
 var std;
 
 var _gameManager = IO.readDB()
@@ -68,4 +68,4 @@ app.post('/games',(req,res) => {
 
 
 
-app.listen(port, '0.0.0.0', () => console.log('app is up'))
+app.listen(port,() => console.log('app is up'))
