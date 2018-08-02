@@ -5,7 +5,7 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
     var http = $http;
 
     const host = window.location.hostname;
-    const port = 3333;
+    const port = 5000;
 
     scope.scores;
     scope.newPlayer = {};

@@ -9,7 +9,7 @@ var app = express()
 app.use(cors())
 var scoresFetchInterval;
 
-const port = process.env.PORT || 8080
+const port = process.env.PORT || 5000
 var std;
 
 var _gameManager = IO.readDB()
