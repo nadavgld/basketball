@@ -1,6 +1,9 @@
 var express = require('express')
 var bodyParser = require('body-parser')
 var cors = require('cors')
+var md5 = require('md5');
+
+const PSSWRD = "2eec8c77e2944a566e823d55b19207f7";
 
 var IO = require('./io')
 var Utilities = require('./utils')
@@ -33,6 +36,16 @@ app.get('/players', (req, res) => {
 
 app.get('/games',(req,res) => {
     res.send(_gameManager.games)
+})
+
+app.get('/password/:ps',(req,res) => {
+    var ps = req.params.ps;
+
+    if(md5(ps) == PSSWRD){
+        res.send({success: true})
+    }else{
+        res.send({success: false})
+    }
 })
 
 app.post('/games',(req,res) => {

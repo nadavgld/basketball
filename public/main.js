@@ -94,18 +94,35 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
             return;
         }
 
-        var body = {
-            "players": scope.newPlayers
+        var ps = prompt("Enter password");
+
+        if (!ps){
+            hideLoading();
+            return;
         }
 
-        http.post(hostPortJoin(host, port) + "/games", body).then(response => {
-            hideLoading();
+        else {
+            http.get(hostPortJoin(host, port) + "/password/" + ps).then(response => {
+                if (response.data.success) {
+                    alert("sucess!")
+                    var body = {
+                        "players": scope.newPlayers
+                    }
 
-            scope.newPlayers = [];
-            scope.tmpPlayers = JSON.parse(JSON.stringify(scope.players));
-            scope.scores = response.data;
+                    http.post(hostPortJoin(host, port) + "/games", body).then(response => {
+                        hideLoading();
 
-        })
+                        scope.newPlayers = [];
+                        scope.tmpPlayers = JSON.parse(JSON.stringify(scope.players));
+                        scope.scores = response.data;
+
+                    })
+                }else{
+                    alert("Wrong password!")
+                    hideLoading();
+                }
+            })
+        }
     }
 }])
 
