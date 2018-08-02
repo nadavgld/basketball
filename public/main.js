@@ -18,23 +18,22 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
     scope.newPlayers = [];
 
     scope.init = function () {
+        showLoading();
         scope.fetchScores();
         scope.fetchPlayers();
+        hideLoading();
     }
 
     scope.fetchScores = function () {
-        $http.get(hostPortJoin(host, port) + "/scores").then((response) => {
+        http.get(hostPortJoin(host, port) + "/scores").then((response) => {
             scope.scores = response.data;
         })
     }
 
     scope.fetchPlayers = function () {
-        // return new Promise((resolve, reject) => {
-            $http.get(hostPortJoin(host, port) + "/players").then((response) => {
-                scope.players = response.data;
-                // resolve();
-            })
-        // })
+        http.get(hostPortJoin(host, port) + "/players").then((response) => {
+            scope.players = response.data;
+        })
     }
 
     scope.tableClass = function (index) {
@@ -48,7 +47,7 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
             case 2: return "bronze"
 
             default:
-                return;
+                return "table-item";
         }
     }
 
@@ -59,9 +58,6 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
 
             scope.newPlayers = [];
             scope.tmpPlayers = JSON.parse(JSON.stringify(scope.players));
-
-            console.log(scope.newPlayers);
-            console.log(scope.tmpPlayers);
         } else {
             scope.showNewGame = false;
             scope.NewGameButtonText = "Add Game";
@@ -79,7 +75,7 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
     }
 
     scope.addNewPlayer = function () {
-        if(scope.newPlayer.name.length == 0)
+        if (scope.newPlayer.name.length == 0)
             return;
 
         if (scope.tmpPlayers.indexOf(scope.newPlayer.name) == -1 && scope.newPlayers.indexOf(scope.newPlayer.name) == -1) {
@@ -91,13 +87,38 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
     }
 
     scope.sendScore = function () {
+        showLoading();
         if (scope.newPlayers.length < 2) {
             alert("Game must contain atleast 2 players")
+            hideLoading();
             return;
         }
+
+        var body = {
+            "players": scope.newPlayers
+        }
+
+        http.post(hostPortJoin(host, port) + "/games", body).then(response => {
+            hideLoading();
+
+            scope.newPlayers = [];
+            scope.tmpPlayers = JSON.parse(JSON.stringify(scope.players));
+            scope.scores = response.data;
+
+        })
     }
 }])
 
 function hostPortJoin(host, port) {
     return "http://" + host + ':' + port;
+}
+
+function showLoading() {
+    $(".lds-circle").show();
+}
+
+function hideLoading() {
+    setTimeout(() => {
+        $(".lds-circle").hide();
+    }, 1000);
 }

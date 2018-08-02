@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Baketball Tournament</title>
+    <title>Basketball Tournament</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -21,7 +21,7 @@
 
 <body ng-controller="mainController" ng-init="init()">
 
-    <div class="container">
+    <div class="container mt-2">
         <h1>SIEMENS - Students Basketball Tournament</h1>
 
         <table class="table mt-50">
@@ -44,7 +44,7 @@
                         {{player.name}}
                     </td>
                     <td>
-                        {{player.score}}
+                        {{player.score | number}}
                     </td>
                     <td>
                         {{player.games}}
@@ -54,7 +54,10 @@
         </table>
 
         <div class="mt-50">
-            <button class="btn btn-success" ng-click="toggleNewGame()">{{NewGameButtonText}}</button>
+            <div class="d-flex">
+                <button class="btn btn-success" ng-click="toggleNewGame()">{{NewGameButtonText}}</button>
+                <div class="lds-circle"></div>
+            </div>
 
             <div ng-if="showNewGame">
                 <!-- <div class="col-md-12 ml-30 mt-20">

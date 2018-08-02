@@ -8,6 +8,17 @@
     --bg-bronze-hover: #c7aa8c;
     --bg-bronze: #c99b6d;
     --txt-bronze: #000000;
+
+    --h1-color: rgb(84, 159, 180);
+}
+
+body{
+    background: #fefefe
+}
+
+h1{
+    color: var(--h1-color);
+    text-shadow: 1px 1px 0px #000;
 }
 
 .gold{
@@ -87,6 +98,16 @@ table > tbody > tr:hover{
     cursor: pointer;
   }
 
+  .table-item{
+    background: #555;
+    color: white;
+  }
+  
+  .table-item:hover{
+    background: #f0f0f0;
+    color: #555;
+  }
+
   .input-player{
     height: 40px;
     border: 1px solid #adadad;
@@ -96,3 +117,29 @@ table > tbody > tr:hover{
     margin-top: 10px;
     padding-left: 9px;
   }
+
+  .lds-circle {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin: 6px;
+    border-radius: 50%;
+    background: var(--bg-gold);
+    animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+  @keyframes lds-circle {
+    0%, 100% {
+      animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+    }
+    0% {
+      transform: rotateY(0deg);
+    }
+    50% {
+      transform: rotateY(1800deg);
+      animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+    }
+    100% {
+      transform: rotateY(3600deg);
+    }
+  }
+  
