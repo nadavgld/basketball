@@ -4,7 +4,7 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
     var scope = $scope;
     var http = $http;
 
-    const host = /*window.location.hostname;*/ "https://siemens-basketball.herokuapp.com/";
+    const host = /*window.location.hostname;*/ "https://siemens-basketball.herokuapp.com";
     const port = 5000;
 
     scope.scores;
