@@ -82,7 +82,7 @@ table > tbody > tr:hover{
 
 .grid-table{
     display: grid;
-    grid-template-columns: repeat(3, 150px);
+    grid-template-columns: repeat(2,50%);
     grid-gap: 5px;
   }
   
