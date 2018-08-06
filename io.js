@@ -40,42 +40,40 @@ module.exports = {
 
             var promises = [];
             gm.players.forEach(player => {
-                console.log(player);
-                // promises.push(
-                //     Request.put({
-                //         url: SERVER_URL + "players" + APIKEY + '&q={"name":"' + player.name + '"}',
-                //         json: {
-                //             "score": player.score,
-                //             "games": player.games,
-                //             "name": player.name
-                //         },
-                //         function(err, httpResponse, body) {
-                //             console.log(err);
-                //             console.log(body);
-                //         }
-                //     })
-                // )
+                promises.push(
+                    Request.put({
+                        url: SERVER_URL + "players" + APIKEY + '&q={"name":"' + player.name + '"}',
+                        json: {
+                            "score": player.score,
+                            "games": player.games,
+                            "name": player.name
+                        },
+                        function(err, httpResponse, body) {
+                            console.log(err);
+                            console.log(body);
+                        }
+                    })
+                )
             })
 
-            // var lastGame = gm.games[gm.games.length - 1];
-            // promises.push(
-            //     Request.post({
-            //         url: SERVER_URL + "games" + APIKEY,
-            //         json: {
-            //             "date": lastGame.date,
-            //             "players": lastGame.players
-            //         },
-            //         function(err, httpResponse, body) {
-            //             console.log(err);
-            //             console.log(body);
-            //         }
-            //     })
-            // )
+            var lastGame = gm.games[gm.games.length - 1];
+            promises.push(
+                Request.post({
+                    url: SERVER_URL + "games" + APIKEY,
+                    json: {
+                        "date": lastGame.date,
+                        "players": lastGame.players
+                    },
+                    function(err, httpResponse, body) {
+                        console.log(err);
+                        console.log(body);
+                    }
+                })
+            )
 
-            // Promise.all(promises).then(() => {
-            //     resolve("done");
-            // })
-            resolve();
+            Promise.all(promises).then(() => {
+                resolve("done");
+            })
         })
 
     },
