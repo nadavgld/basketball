@@ -39,7 +39,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="player in scores | orderBy: '-score'" ng-class="tableClass($index)">
+                <tr ng-repeat="player in scores | orderBy: '-score'" ng-class="tableClass($index)" ng-click="selectPlayer(player.name)">
                     <td>
                         {{player.name}}
                     </td>
@@ -53,7 +53,21 @@
             </tbody>
         </table>
 
-        <div class="mt-50">
+        <div ng-if="selectedPlayer">
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="game in selectedPlayer.games">
+                    <h6>{{game.date}}</h6>
+                    <ul>
+                        <li ng-repeat="player in game.players"> 
+                            <b ng-if="player == selectedPlayer.name"> {{ player }} </b>
+                            <span ng-if="player != selectedPlayer.name"> {{ player }}</span>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-3">
             <div class="d-flex">
                 <button class="btn btn-success" ng-click="toggleNewGame()">{{NewGameButtonText}}</button>
                 <div class="lds-circle"></div>

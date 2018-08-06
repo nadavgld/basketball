@@ -9,6 +9,7 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
 
     scope.scores;
     scope.newPlayer = {};
+    scope.selectedPlayer = {};
 
     scope.showNewGame = false;
     scope.NewGameButtonText = "Add Game";
@@ -129,6 +130,26 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
                 }
             })
         }
+    }
+
+    scope.selectPlayer = function(player){
+        if(scope.selectedPlayer.name == player){
+            scope.selectedPlayer.name = "";
+            scope.selectedPlayer.games = [];
+        }else{
+            scope.selectedPlayer.name = player;
+            scope.selectedPlayer.games = [];
+
+            http.get(hostPortJoin(host, port) + "/games").then((response) => {
+                scope.selectedPlayer.games = scope.filterGamesByName(player,response.data);
+            })
+        }
+    }
+
+    scope.filterGamesByName = function(name, games){
+        return games.filter(g => {
+            return g.players.indexOf(name) > -1
+        })
     }
 }])
 
