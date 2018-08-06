@@ -52,6 +52,11 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
     }
 
     scope.toggleNewGame = function () {
+        if (!scope.players) {
+            console.log(scope.scores);
+            scope.players = scope.scores.map(s => s.name)
+        }
+
         if (!scope.showNewGame) {
             scope.showNewGame = true;
             scope.NewGameButtonText = "Hide Add Game";
@@ -96,7 +101,7 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
 
         var ps = prompt("Enter password");
 
-        if (!ps){
+        if (!ps) {
             hideLoading();
             return;
         }
@@ -113,11 +118,12 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
                         hideLoading();
 
                         scope.newPlayers = [];
+                        scope.scores = response.data.scores;
+                        scope.players = response.data.players;
                         scope.tmpPlayers = JSON.parse(JSON.stringify(scope.players));
-                        scope.scores = response.data;
 
                     })
-                }else{
+                } else {
                     alert("Wrong password!")
                     hideLoading();
                 }

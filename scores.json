@@ -1,1 +1,91 @@
-{"players":[{"name":"Assaf Yehiely","score":5.092010548749032,"games":2},{"name":"Nadav Azoury","score":6.017830648521584,"games":2},{"name":"Nir Movshvich","score":3.2403703492039297,"games":2},{"name":"Ofir Lapid","score":4.166190448976481,"games":2},{"name":"Nadav Grinberg","score":4.629100498862757,"games":2},{"name":"Sahar Ben Shushan","score":1.8516401995451028,"games":2}],"games":[{"date":"2018-8-2 14:26:35","players":["Assaf Yehiely","Nadav Azoury","Nir Movshvich","Ofir Lapid","Nadav Grinberg","Sahar Ben Shushan"]},{"date":"2018-8-2 14:27:06","players":["Nadav Grinberg","Nadav Azoury","Ofir Lapid","Assaf Yehiely","Sahar Ben Shushan","Nir Movshvich"]}],"amount_total_players":12}
+{
+    "players": [
+        {
+            "name": "Assaf Yehiely",
+            "score": 5.547001962252292,
+            "games": 3
+        },
+        {
+            "name": "Nadav Azoury",
+            "score": 7.7658027471532085,
+            "games": 2
+        },
+        {
+            "name": "Nir Movshvich",
+            "score": 2.773500981126146,
+            "games": 5
+        },
+        {
+            "name": "Ofir Lapid",
+            "score": 5.547001962252292,
+            "games": 2
+        },
+        {
+            "name": "Nadav Grinberg",
+            "score": 8.320502943378438,
+            "games": 5
+        },
+        {
+            "name": "Sahar Ben Shushan",
+            "score": 4.437601569801833,
+            "games": 5
+        },
+        {
+            "name": "Assaf Nahum",
+            "score": 4.437601569801833,
+            "games": 2
+        }
+    ],
+    "games": [
+        {
+            "date": "2018-8-2 14:26:35",
+            "players": [
+                "Assaf Yehiely",
+                "Nadav Azoury",
+                "Nir Movshvich",
+                "Ofir Lapid",
+                "Nadav Grinberg",
+                "Sahar Ben Shushan"
+            ]
+        },
+        {
+            "date": "2018-8-2 14:27:06",
+            "players": [
+                "Nadav Grinberg",
+                "Nadav Azoury",
+                "Ofir Lapid",
+                "Assaf Yehiely",
+                "Sahar Ben Shushan",
+                "Nir Movshvich"
+            ]
+        },
+        {
+            "date": "2018-8-5 12:57:21",
+            "players": [
+                "Nadav Grinberg",
+                "Sahar Ben Shushan",
+                "Assaf Nahum",
+                "Nir Movshvich",
+                "Assaf Yehiely"
+            ]
+        },
+        {
+            "date": "2018-8-5 15:54:57",
+            "players": [
+                "Sahar Ben Shushan",
+                "Nadav Grinberg",
+                "Nir Movshvich",
+                "Assaf Nahum"
+            ]
+        },
+        {
+            "date": "2018-8-5 15:55:18",
+            "players": [
+                "Nadav Grinberg",
+                "Sahar Ben Shushan",
+                "Nir Movshvich"
+            ]
+        }
+    ],
+    "amount_total_players": 24
+}

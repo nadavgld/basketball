@@ -65,13 +65,12 @@ module.exports = {
                     }
                 })
             })
-            console.log(result);
-            resolve(this.MinMaxStandart(result))
+            resolve(this.MinMaxStandart(result, games))
 
         })
     },
 
-    MinMaxStandart: function (scores) {
+    MinMaxStandart: function (scores, games) {
         var min = Number.MAX_VALUE;
         var max = Number.MIN_VALUE;
         var result = [];
@@ -88,12 +87,40 @@ module.exports = {
         Object.keys(scores).forEach(key => {
             var s = scores[key]
 
-            result.push({
-                "name": key,
-                "score": (s + (max-min))
+            this.calculateTotalGamesPerPlayer(games, key).then((amountOfGames) => {
+                result.push({
+                    "name": key,
+                    "score": (s + (max - min)),
+                    "games": amountOfGames
+                })
             })
         })
 
         return result;
+    },
+
+    calculateTotalPlayers: function (games) {
+        return new Promise((resolve, reject) => {
+
+            var result = 0;
+            games.forEach(game => {
+                result += game.players.length;
+            })
+            resolve(result)
+
+        })
+    },
+
+    calculateTotalGamesPerPlayer: function (games, name) {
+        return new Promise((resolve, reject) => {
+
+            var result = 0;
+            games.forEach(game => {
+                if(game.players.indexOf(name) > -1)
+                    result++;
+            })
+            resolve(result)
+
+        })
     }
 };
