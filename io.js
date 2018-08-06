@@ -40,20 +40,36 @@ module.exports = {
 
             var promises = [];
             gm.players.forEach(player => {
-                promises.push(
-                    Request.put({
-                        url: SERVER_URL + "players" + APIKEY + '&q={"name":"' + player.name + '"}',
-                        json: {
-                            "score": player.score,
-                            "games": player.games,
-                            "name": player.name
-                        },
-                        function(err, httpResponse, body) {
-                            console.log(err);
-                            console.log(body);
-                        }
-                    })
-                )
+                if (player.games > 1)
+                    promises.push(
+                        Request.put({
+                            url: SERVER_URL + "players" + APIKEY + '&q={"name":"' + player.name + '"}',
+                            json: {
+                                "score": player.score,
+                                "games": player.games,
+                                "name": player.name
+                            },
+                            function(err, httpResponse, body) {
+                                console.log(err);
+                                console.log(body);
+                            }
+                        })
+                    )
+                else
+                    promises.push(
+                        Request.post({
+                            url: SERVER_URL + "players" + APIKEY,
+                            json: {
+                                "score": player.score,
+                                "games": player.games,
+                                "name": player.name
+                            },
+                            function(err, httpResponse, body) {
+                                console.log(err);
+                                console.log(body);
+                            }
+                        })
+                    )
             })
 
             var lastGame = gm.games[gm.games.length - 1];

@@ -70,12 +70,26 @@ app.post('/games', (req, res) => {
     var players = req.body.players;
     var date = new Date().toLocaleString();
 
+    var playersToAdd = []
+    players.forEach(p => {
+        if(_gameManager.players.map(_p => p.name).indexOf(p) == -1){
+            playersToAdd.push(p)
+        }
+    });
+
+    playersToAdd.forEach( p => {
+        _gameManager.players.push({
+            "name": p,
+            "score": 0,
+            "games": 1
+        })
+    })
+
     _gameManager.games.push({
         "date": date,
         "players": players
     });
 
-    console.log(JSON.stringify(_gameManager.players));
     _gameManager.amount_total_players += players.length;
 
     Utilities.calculateSTD(_gameManager.games, _gameManager.amount_total_players).then(_std => {
@@ -86,8 +100,8 @@ app.post('/games', (req, res) => {
             _gameManager = IO.countGamesPerPlayer(_gameManager);
 
             // IO.writeDB(JSON.stringify(_gameManager));
-            IO.writeDB(_gameManager).then(()=>{  
-                res.send({"scores":_gameManager.players,"players":_gameManager.players.map(s => s.name)});
+            IO.writeDB(_gameManager).then(() => {
+                res.send({ "scores": _gameManager.players, "players": _gameManager.players.map(s => s.name) });
             });
         })
     })
