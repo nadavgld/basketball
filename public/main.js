@@ -152,6 +152,28 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
             return g.players.indexOf(name) > -1
         })
     }
+
+    scope.shuffleGame = function(){
+        if(scope.newPlayers.length >= 2){
+            var randArray = [];
+            var tmp = JSON.parse(JSON.stringify(scope.newPlayers));
+            const amount = scope.newPlayers.length;
+
+            while(randArray.length < amount){
+                var r = Math.floor(Math.random()*tmp.length)
+                var playerToSwitch = tmp[r];
+                randArray.push(playerToSwitch);
+                tmp.splice(r,1);
+            }
+
+            scope.newPlayers = randArray;
+        }
+    }
+
+    scope.resetGame = function(){
+        scope.newPlayers = [];
+        scope.tmpPlayers = JSON.parse(JSON.stringify(scope.players));
+    }
 }])
 
 function hostPortJoin(host, port) {

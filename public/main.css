@@ -8,107 +8,104 @@
     --bg-bronze-hover: #c7aa8c;
     --bg-bronze: #c99b6d;
     --txt-bronze: #000000;
-
     --h1-color: rgb(84, 159, 180);
 }
 
-body{
+body {
     background: #fefefe
 }
 
-h1{
+h1 {
     color: var(--h1-color);
     text-shadow: 1px 1px 0px #000;
 }
 
-.gold{
+.gold {
     background-color: var(--bg-gold) !important;
     color: var(--txt-gold) !important;
     font-weight: 700;
 }
 
-.gold:hover{
+.gold:hover {
     background-color: var(--bg-gold-hover) !important;
 }
 
-.silver{
+.silver {
     background-color: var(--bg-silver) !important;
     color: var(--txt-silver) !important;
     font-weight: 600;
 }
 
-.silver:hover{
+.silver:hover {
     background-color: var(--bg-silver-hover) !important;
 }
 
-
-.bronze{
+.bronze {
     background-color: var(--bg-bronze) !important;
     color: var(--txt-bronze) !important;
     font-weight: 500;
 }
 
-.bronze:hover{
+.bronze:hover {
     background-color: var(--bg-bronze-hover) !important;
 }
 
-
-.mt-50{
+.mt-50 {
     margin-top: 50px;
 }
 
-.mt-20{
+.mt-20 {
     margin-top: 20px;
 }
 
-.ml-30{
+.ml-30 {
     margin-left: 30px;
 }
 
-.size-50{
+.size-50 {
     width: 250px;
 }
 
-table > tbody > tr:hover{
-    background-color: #bedadf;    
+table>tbody>tr:hover {
+    background-color: #bedadf;
 }
 
-.show-header{
+.show-header {
     font-size: 16px;
     border-bottom: 1px solid #dee2e6;
     text-align: left;
     margin-bottom: 10px;
 }
 
-.grid-table{
+.grid-table {
     display: grid;
-    grid-template-columns: repeat(2,50%);
+    grid-template-columns: repeat(2, 50%);
     grid-gap: 5px;
-  }
-  
-  .grid-item{
+}
+
+.grid-item {
     background: #555;
     padding: 10px;
     color: white;
-  }
-  
-  .grid-item:hover{
+}
+
+.grid-item:hover {
     background: #f0f0f0;
     color: #555;
     cursor: pointer;
-  }
+}
 
-  .table-item{
+.table-item {
     background: #555;
     color: white;
-  }
-  
-  .table-item:hover{
+}
+
+.table-item:hover {
     background: #f0f0f0;
     color: #555;
-  }
+}
 
-  .input-player{
+.input-player {
     height: 40px;
     border: 1px solid #adadad;
     padding: 5px;
@@ -116,9 +113,9 @@ table > tbody > tr:hover{
     width: 150px;
     margin-top: 10px;
     padding-left: 9px;
-  }
+}
 
-  .lds-circle {
+.lds-circle {
     display: inline-block;
     width: 25px;
     height: 25px;
@@ -127,19 +124,47 @@ table > tbody > tr:hover{
     background: var(--bg-gold);
     animation: lds-circle 2.4s cubic-bezier(0, 0.2, 0.8, 1) infinite;
 }
-  @keyframes lds-circle {
+
+@keyframes lds-circle {
     0%, 100% {
-      animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+        animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
     }
     0% {
-      transform: rotateY(0deg);
+        transform: rotateY(0deg);
     }
     50% {
-      transform: rotateY(1800deg);
-      animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+        transform: rotateY(1800deg);
+        animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
     }
     100% {
-      transform: rotateY(3600deg);
+        transform: rotateY(3600deg);
     }
-  }
-  
+}
+
+.table-flex {
+    display: flex;
+}
+
+.current-game{
+
+}
+
+.all-players{
+
+}
+
+@media only screen and (max-width: 500px) {
+    .table-flex {
+        display: block !important;
+    }
+
+    .current-game{
+        margin-top: 25px;
+        border:0 !important;
+    }
+    
+    .all-players{
+        border:0 !important;        
+    }
+    
+}
