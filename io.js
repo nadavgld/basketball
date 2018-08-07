@@ -40,7 +40,7 @@ module.exports = {
 
             var promises = [];
             gm.players.forEach(player => {
-                if (player.games >= 1)
+                if (playerAlreadyIn(player.name, gm.games))
                     promises.push(
                         Request.put({
                             url: SERVER_URL + "players" + APIKEY + '&q={"name":"' + player.name + '"}',
@@ -61,7 +61,7 @@ module.exports = {
                             url: SERVER_URL + "players" + APIKEY,
                             json: {
                                 "score": player.score,
-                                "games": 1,
+                                "games": player.games,
                                 "name": player.name
                             },
                             function(err, httpResponse, body) {
@@ -122,3 +122,16 @@ module.exports = {
     }
 
 };
+
+function playerAlreadyIn(player, games) {
+    if(games.length == 0)
+        return true;
+
+    for (var i = 0; i < games.length - 1; i++) {
+        var g = games[i];
+        if (g.players.indexOf(player) > -1)
+            return true;
+    }
+
+    return false;
+}

@@ -81,7 +81,7 @@ app.post('/games', (req, res) => {
         _gameManager.players.push({
             "name": p,
             "score": 0,
-            "games": 0
+            "games": 1
         })
     })
 
