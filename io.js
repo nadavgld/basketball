@@ -40,7 +40,7 @@ module.exports = {
 
             var promises = [];
             gm.players.forEach(player => {
-                if (player.games > 1)
+                if (player.games >= 1)
                     promises.push(
                         Request.put({
                             url: SERVER_URL + "players" + APIKEY + '&q={"name":"' + player.name + '"}',
@@ -61,7 +61,7 @@ module.exports = {
                             url: SERVER_URL + "players" + APIKEY,
                             json: {
                                 "score": player.score,
-                                "games": player.games,
+                                "games": 1,
                                 "name": player.name
                             },
                             function(err, httpResponse, body) {
