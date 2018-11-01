@@ -7,9 +7,6 @@ const SERVER_URL = "https://api.mlab.com/api/1/databases/basketball/collections/
 module.exports = {
 
     readDB: function () {
-        // var scores = JSON.parse(fs.readFileSync('./scores.json', 'utf8'));
-        // return this.countGamesPerPlayer(scores);
-
         return new Promise((resolve, reject) => {
 
             var self = this;
@@ -25,7 +22,8 @@ module.exports = {
                     if (error) {
                         return console.error('upload failed:', error);
                     }
-                    gm.games = JSON.parse(body);
+                    // gm.games = JSON.parse(body);
+                    gm.games = self.filterGamesByMonth(JSON.parse(body))
                     resolve(self.countGamesPerPlayer(gm))
                 })
             })
@@ -33,9 +31,16 @@ module.exports = {
 
     },
 
-    writeDB: function (gm) {
-        // fs.writeFileSync('./scores.json', gm, 'utf8');
+    filterGamesByMonth: function(games){
+        var thisMonth = new Date().getMonth() + 1;
 
+        return games.filter( g => {
+            var month = g.date.split(" ")[0].split("-")[1];
+            return parseInt(month) == parseInt(thisMonth)
+        })
+    },
+
+    writeDB: function (gm) {
         return new Promise((resolve, reject) => {
 
             var promises = [];
@@ -78,7 +83,9 @@ module.exports = {
                     url: SERVER_URL + "games" + APIKEY,
                     json: {
                         "date": lastGame.date,
-                        "players": lastGame.players
+                        "players": lastGame.players,
+                        "startPoint": lastGame.startPoint,
+                        "text": lastGame.text
                     },
                     function(err, httpResponse, body) {
                         console.log(err);
@@ -98,22 +105,8 @@ module.exports = {
         var players = gm.players;
         var games = gm.games;
 
-        // players.forEach(element => {
-        //     element.games = 0;
-        // });
-
         games.forEach(game => {
             game.players.forEach(gamePlayer => {
-                // if (players.find(y => y.name == gamePlayer)) {
-                //     players.find(y => y.name == gamePlayer).games++;
-                // } else {
-                //     players.push({
-                //         "name": gamePlayer,
-                //         "score": 0,
-                //         "games": 1
-                //     })
-                // }
-
                 gm.amount_total_players++;
             })
         })
@@ -124,7 +117,7 @@ module.exports = {
 };
 
 function playerAlreadyIn(player, games) {
-    if(games.length == 0)
+    if (games.length == 0)
         return true;
 
     for (var i = 0; i < games.length - 1; i++) {

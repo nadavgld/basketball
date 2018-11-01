@@ -1,5 +1,18 @@
+const newScoreSystem = require('./scoreCalculation');
+
 module.exports = {
 
+    newPointsCalculation: function (game, startPoint) {
+        var res = newScoreSystem.getScore(startPoint, game);
+
+        var scores = res.scores;
+        var _text = res._text;
+
+        scores = newScoreSystem.sortResult(scores)
+
+        return { scores, _text };
+
+    },
     convertGameToPoints: function (game) {
         var result = [];
         var maxScore;
@@ -37,7 +50,8 @@ module.exports = {
             var total_std = 0;
 
             games.forEach(game => {
-                var scores = this.convertGameToPoints(game.players)
+                var res = this.newPointsCalculation(game.players, game.startPoint)
+                var scores = res.scores;
 
                 scores.forEach(s => {
                     total_std += Math.pow(s.score, 2)
@@ -55,7 +69,11 @@ module.exports = {
 
             var result = [];
             games.forEach(game => {
-                var scores = this.convertGameToPoints(game.players)
+                var res = this.newPointsCalculation(game.players, game.startPoint)
+                var scores = res.scores;
+                var _text = res._text;
+
+                game.text = _text;
 
                 scores.forEach(s => {
                     if (result[s.player]) {
@@ -116,7 +134,7 @@ module.exports = {
 
             var result = 0;
             games.forEach(game => {
-                if(game.players.indexOf(name) > -1)
+                if (game.players.indexOf(name) > -1)
                     result++;
             })
             resolve(result)

@@ -3,7 +3,7 @@ var bodyParser = require('body-parser')
 var cors = require('cors')
 var md5 = require('md5');
 
-const PSSWRD = "2eec8c77e2944a566e823d55b19207f7";
+const PSSWRD = "0cc175b9c0f1b6a831c399e269772661";
 
 var IO = require('./io')
 var Utilities = require('./utils')
@@ -17,7 +17,6 @@ var std;
 
 var _gameManager = {};
 IO.readDB().then((gm) => {
-    console.log("game manager is ready");
     _gameManager = gm;
 })
 
@@ -32,7 +31,6 @@ app.get('/', (req, res) => {
 
 app.get('/scores', (req, res) => {
     IO.readDB().then((gm) => {
-        console.log("game manager is ready");
         _gameManager = gm;
         res.send(_gameManager.players)
     })
@@ -42,7 +40,6 @@ app.get('/scores', (req, res) => {
 
 app.get('/players', (req, res) => {
     IO.readDB().then((gm) => {
-        console.log("game manager is ready");
         _gameManager = gm;
         res.send(_gameManager.players.map(s => s.name))
     })
@@ -68,6 +65,8 @@ app.get('/password/:ps', (req, res) => {
 
 app.post('/games', (req, res) => {
     var players = req.body.players;
+    var startPlayers = req.body.start;
+
     var date = new Date().toLocaleString();
 
     var playersToAdd = []
@@ -87,7 +86,8 @@ app.post('/games', (req, res) => {
 
     _gameManager.games.push({
         "date": date,
-        "players": players
+        "players": players,
+        "startPoint": startPlayers
     });
 
     _gameManager.amount_total_players += players.length;
@@ -107,14 +107,5 @@ app.post('/games', (req, res) => {
     })
 
 })
-
-// scoresFetchInterval = setInterval(() => {
-//     IO.readDB().then((gm) => {
-//         console.log("game manager is ready");
-//         _gameManager = gm;
-//     })
-// }, 5000)
-
-
 
 app.listen(port, () => console.log('app is up'))

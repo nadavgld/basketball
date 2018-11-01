@@ -63,6 +63,7 @@
                             <span ng-if="player != selectedPlayer.name"> {{ player }}</span>
                         </li>
                     </ul>
+                    <span class="game-text" ng-bind-html="trustAsHtml(game.text)"></span>
                 </li>
             </ul>
         </div>
@@ -104,8 +105,9 @@
 
                 <div class="col-md-12 mt-5 mb-5 text-center d-flex">
                     <div class="d-flex">
-                        <button class="btn btn-info w-100" ng-click="sendScore()"> Send new score </button>
-                        <button type="text" class="btn btn-danger w-100 ml-3" ng-click="shuffleGame()"> Randomize </button>
+                        <button type="text" class="btn btn-danger w-100" ng-click="shuffleGame()"> Randomize </button>
+                        <button type="text" class="btn btn-primary w-100 ml-3" ng-disabled="startPlayers.length >= 2" ng-click="startGame()"> Start </button>
+                        <button class="btn btn-info w-100 ml-3" ng-disabled="startPlayers.length < 2 || !startPlayers" ng-click="sendScore()"> Send new score </button>
                         <button type="text" class="btn btn-default w-100 ml-3" ng-click="resetGame()"> Reset </button>
                     </div>
                 </div>

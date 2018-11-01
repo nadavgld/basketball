@@ -1,11 +1,11 @@
 var app = angular.module('basket-app', [])
 
-app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
+app.controller('mainController', ['$scope', '$http','$sce', function ($scope, $http,$sce) {
     var scope = $scope;
     var http = $http;
 
-    // const host = window.location.hostname;
-    const host = "https://siemens-basketball.herokuapp.com";
+    const host = window.location.hostname;
+    // const host = "https://siemens-basketball.herokuapp.com";
     const port = 5000;
 
     scope.scores;
@@ -18,12 +18,12 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
     scope.players;
     scope.tmpPlayers;
     scope.newPlayers = [];
+    scope.startPlayers = [];
 
     scope.init = function () {
         showLoading();
         scope.fetchScores();
         scope.fetchPlayers();
-        hideLoading();
     }
 
     scope.fetchScores = function () {
@@ -35,6 +35,7 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
     scope.fetchPlayers = function () {
         http.get(hostPortJoin(host, port) + "/players").then((response) => {
             scope.players = response.data;
+            hideLoading();
         })
     }
 
@@ -112,14 +113,18 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
             http.get(hostPortJoin(host, port) + "/password/" + ps).then(response => {
                 if (response.data.success) {
                     alert("sucess!")
+
+                    console.log(scope.startPlayers);
                     var body = {
-                        "players": scope.newPlayers
+                        "players": scope.newPlayers,
+                        "start": scope.startPlayers
                     }
 
                     http.post(hostPortJoin(host, port) + "/games", body).then(response => {
                         hideLoading();
 
                         scope.newPlayers = [];
+                        scope.startPlayers = [];
                         scope.scores = response.data.scores;
                         scope.players = response.data.players;
                         scope.tmpPlayers = JSON.parse(JSON.stringify(scope.players));
@@ -133,52 +138,62 @@ app.controller('mainController', ['$scope', '$http', function ($scope, $http) {
         }
     }
 
-    scope.selectPlayer = function(player){
-        if(scope.selectedPlayer.name == player){
+    scope.startGame = function(){
+        if(scope.newPlayers.length >= 2)
+            scope.startPlayers = JSON.parse(JSON.stringify(scope.newPlayers))
+    }
+
+    scope.selectPlayer = function (player) {
+        if (scope.selectedPlayer.name == player) {
             scope.selectedPlayer.name = "";
             scope.selectedPlayer.games = [];
-        }else{
+        } else {
             scope.selectedPlayer.name = player;
             scope.selectedPlayer.games = [];
 
             http.get(hostPortJoin(host, port) + "/games").then((response) => {
-                scope.selectedPlayer.games = scope.filterGamesByName(player,response.data);
+                scope.selectedPlayer.games = scope.filterGamesByName(player, response.data);
             })
         }
     }
 
-    scope.filterGamesByName = function(name, games){
+    scope.filterGamesByName = function (name, games) {
         return games.filter(g => {
             return g.players.indexOf(name) > -1
         })
     }
 
-    scope.shuffleGame = function(){
-        if(scope.newPlayers.length >= 2){
+    scope.trustAsHtml = function(text){
+        return $sce.trustAsHtml(text)
+    }
+
+    scope.shuffleGame = function () {
+        if (scope.newPlayers.length >= 2) {
             var randArray = [];
             var tmp = JSON.parse(JSON.stringify(scope.newPlayers));
             const amount = scope.newPlayers.length;
 
-            while(randArray.length < amount){
-                var r = Math.floor(Math.random()*tmp.length)
+            while (randArray.length < amount) {
+                var r = Math.floor(Math.random() * tmp.length)
                 var playerToSwitch = tmp[r];
                 randArray.push(playerToSwitch);
-                tmp.splice(r,1);
+                tmp.splice(r, 1);
             }
 
             scope.newPlayers = randArray;
         }
     }
 
-    scope.resetGame = function(){
+    scope.resetGame = function () {
         scope.newPlayers = [];
+        scope.startPlayers = [];
         scope.tmpPlayers = JSON.parse(JSON.stringify(scope.players));
     }
 }])
 
 function hostPortJoin(host, port) {
-    // return "http://" + host + ':' + port;
-    return host;
+    return "http://" + host + ':' + port;
+    // return host;
 }
 
 function showLoading() {
@@ -186,7 +201,5 @@ function showLoading() {
 }
 
 function hideLoading() {
-    setTimeout(() => {
-        $(".lds-circle").hide();
-    }, 1000);
+    $(".lds-circle").hide();
 }
