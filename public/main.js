@@ -6,7 +6,7 @@ app.controller('mainController', ['$scope', '$http','$sce', function ($scope, $h
 
     // const host = window.location.hostname;
     const host = "https://siemens-basketball.herokuapp.com";
-    // const port = 5000;
+    const port = 5000;
 
     scope.scores;
     scope.newPlayer = {};
