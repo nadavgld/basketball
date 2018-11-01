@@ -4,9 +4,9 @@ app.controller('mainController', ['$scope', '$http','$sce', function ($scope, $h
     var scope = $scope;
     var http = $http;
 
-    const host = window.location.hostname;
-    // const host = "https://siemens-basketball.herokuapp.com";
-    const port = 5000;
+    // const host = window.location.hostname;
+    const host = "https://siemens-basketball.herokuapp.com";
+    // const port = 5000;
 
     scope.scores;
     scope.newPlayer = {};
@@ -192,8 +192,8 @@ app.controller('mainController', ['$scope', '$http','$sce', function ($scope, $h
 }])
 
 function hostPortJoin(host, port) {
-    return "http://" + host + ':' + port;
-    // return host;
+    // return "http://" + host + ':' + port;
+    return host;
 }
 
 function showLoading() {
