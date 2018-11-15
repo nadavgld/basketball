@@ -23,7 +23,7 @@ module.exports = {
                         return console.error('upload failed:', error);
                     }
                     // gm.games = JSON.parse(body);
-                    gm.games = self.filterGamesByMonth(JSON.parse(body))
+                    gm.games = /*self.filterGamesByMonth(*/JSON.parse(body)/*)*/
                     resolve(self.countGamesPerPlayer(gm))
                 })
             })

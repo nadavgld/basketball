@@ -1,4 +1,28 @@
 var app = angular.module('basket-app', [])
+const VAPID_PUK = "BCB6ML2HofKZEv4IC61YQW47L9c8M-7_uVA6UF6DxKC9AFcgOiZBaXE_wIrO-uJ_u1_dArvbNrJHbF6uyrD7Ql4"
+
+if('serviceWorker' in navigator){
+    send().catch(err => console.error(err))
+}
+
+async function send(){
+    const REGISTER = await navigator.serviceWorker.register('service-worker.js', {
+        scope: '/'
+    })
+
+    const SUBSCRIPTION = await REGISTER.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(VAPID_PUK)
+    })
+
+    await fetch('https://siemens-basketball.herokuapp.com/subscribe', {
+        method: 'POST',
+        body: JSON.stringify(SUBSCRIPTION),
+        headers: {
+            'content-type': 'application/json'
+        }
+    })
+}
 
 app.controller('mainController', ['$scope', '$http','$sce', function ($scope, $http,$sce) {
     var scope = $scope;
@@ -6,6 +30,7 @@ app.controller('mainController', ['$scope', '$http','$sce', function ($scope, $h
 
     // const host = window.location.hostname;
     const host = "https://siemens-basketball.herokuapp.com";
+    // const host = "localhost";
     const port = 5000;
 
     scope.scores;
@@ -203,3 +228,18 @@ function showLoading() {
 function hideLoading() {
     $(".lds-circle").hide();
 }
+
+function urlBase64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding)
+      .replace(/\-/g, '+')
+      .replace(/_/g, '/');
+  
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+  
+    for (let i = 0; i < rawData.length; ++i) {
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  }

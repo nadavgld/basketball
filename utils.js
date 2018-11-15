@@ -1,12 +1,15 @@
 const newScoreSystem = require('./scoreCalculation');
 
 module.exports = {
+    _subscriptions: [],
+    _latestGame: null,
 
     newPointsCalculation: function (game, startPoint) {
         var res = newScoreSystem.getScore(startPoint, game);
 
         var scores = res.scores;
         var _text = res._text;
+        this._latestGame = _text
 
         scores = newScoreSystem.sortResult(scores)
 
@@ -139,6 +142,14 @@ module.exports = {
             })
             resolve(result)
 
+        })
+    },
+
+    pushMsg: function(webPush, msg){
+        const PAYLOAD = JSON.stringify({ title: 'Siemens Basketball', body: msg })
+
+        this._subscriptions.forEach(sub => {
+            webPush.sendNotification(sub, PAYLOAD).catch(err => console.log(err))
         })
     }
 };

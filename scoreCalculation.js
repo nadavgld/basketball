@@ -1,12 +1,3 @@
-// const endPoint = ["Tal z","Nadav g","Beyonce","Linoy","Nir m","Assaf","Ofir"];
-// const startPoint = randomize(endPoint);
-
-// console.log("start: " + startPoint)
-// console.log("end: " + endPoint)
-
-// var scores = calculateScores(startPoint, endPoint);
-// console.log(scores.sort((a,b)=> a.score < b.score))
-
 function calculateScores(start, _end) {
     var gamePlay = JSON.parse(JSON.stringify(start))
     var scores = initScores(gamePlay)

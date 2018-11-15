@@ -2,8 +2,13 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var cors = require('cors')
 var md5 = require('md5');
+var webPush = require('web-push')
 
 const PSSWRD = "0cc175b9c0f1b6a831c399e269772661";
+const VAPID_PUK = "BCB6ML2HofKZEv4IC61YQW47L9c8M-7_uVA6UF6DxKC9AFcgOiZBaXE_wIrO-uJ_u1_dArvbNrJHbF6uyrD7Ql4"
+const VAPID_PRK = "w2jVql7Nn7zeWEZ906ekOoBoGNwmvsAHLNQVJMXcjRU"
+
+webPush.setVapidDetails('https://siemens-basketball.herokuapp.com/', VAPID_PUK, VAPID_PRK);
 
 var IO = require('./io')
 var Utilities = require('./utils')
@@ -24,6 +29,28 @@ app.use(express.static('public'))
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+
+app.post('/subscribe', (req, res) => {
+    console.log('new subscription');
+    const subscription = req.body;
+
+    Utilities._subscriptions.push(subscription)
+
+    res.status(201).send({})
+
+    const PAYLOAD = JSON.stringify({ title: 'Siemens Basketball', body: 'Registered successfully' })
+
+    webPush.sendNotification(subscription, PAYLOAD).catch(err => {})
+})
+
+app.post('/push', (req, res) => {
+    console.log('pushing msg');
+
+    const MSG = req.body.msg
+    Utilities.pushMsg(webPush, MSG)
+
+    res.status(201).send({})
+})
 
 app.get('/', (req, res) => {
     res.send("Welcome")
@@ -71,12 +98,12 @@ app.post('/games', (req, res) => {
 
     var playersToAdd = []
     players.forEach(p => {
-        if(_gameManager.players.map(_p => p.name).indexOf(p) == -1){
+        if (_gameManager.players.map(_p => p.name).indexOf(p) == -1) {
             playersToAdd.push(p)
         }
     });
 
-    playersToAdd.forEach( p => {
+    playersToAdd.forEach(p => {
         _gameManager.players.push({
             "name": p,
             "score": 0,
@@ -102,6 +129,10 @@ app.post('/games', (req, res) => {
             // IO.writeDB(JSON.stringify(_gameManager));
             IO.writeDB(_gameManager).then(() => {
                 res.send({ "scores": _gameManager.players, "players": _gameManager.players.map(s => s.name) });
+
+                var _text = Utilities._latestGame.split("<br>")
+                _text.shift()
+                Utilities.pushMsg(webPush, _text.join(', '))
             });
         })
     })
