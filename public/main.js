@@ -2,10 +2,10 @@ var app = angular.module('basket-app', [])
 const VAPID_PUK = "BCB6ML2HofKZEv4IC61YQW47L9c8M-7_uVA6UF6DxKC9AFcgOiZBaXE_wIrO-uJ_u1_dArvbNrJHbF6uyrD7Ql4"
 
 if('serviceWorker' in navigator){
-    var _service = await navigator.serviceWorker.getRegistration()
-
-    if(!_service.scope || _service.length == 0)
+    navigator.serviceWorker.getRegistration().then(_service => {    
+        if(!_service.scope || _service.length == 0)
         send().catch(err => console.error(err))
+    })
 }
 
 async function send(){
