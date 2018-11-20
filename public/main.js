@@ -3,7 +3,7 @@ const VAPID_PUK = "BCB6ML2HofKZEv4IC61YQW47L9c8M-7_uVA6UF6DxKC9AFcgOiZBaXE_wIrO-
 
 if('serviceWorker' in navigator){
     navigator.serviceWorker.getRegistration().then(_service => {    
-        if(!_service.scope || _service.length == 0)
+        if(!_service || !_service.scope || _service.length == 0)
         send().catch(err => console.error(err))
     })
 }
